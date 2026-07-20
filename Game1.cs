@@ -8,6 +8,8 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private Priquito priquito;
+    private ParCano cano;
 
     public Game1()
     {
@@ -18,8 +20,8 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
+        priquito = new Priquito(new Vector2(100, 200));
+        cano = new ParCano(new Vector2(800, 0), -100f, 100f, 150f);
         base.Initialize();
     }
 
@@ -27,7 +29,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
+        priquito.Sprite = Content.Load<Texture2D>("Priquito 1.0");
+        cano.Sprite = Content.Load<Texture2D>("Cano 1.0");
     }
 
     protected override void Update(GameTime gameTime)
@@ -35,7 +38,8 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        priquito.Update(gameTime);
+        cano.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -44,7 +48,10 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
+        _spriteBatch.Begin();
+        priquito.Draw(_spriteBatch);
+        cano.Draw(_spriteBatch);
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
